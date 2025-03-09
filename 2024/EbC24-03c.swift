@@ -40,10 +40,5 @@ outer: while true {
   }
 }
 
-var total = 0
-grid.forEach {
-  print($0.map { String($0) }.joined())
-  total += $0.reduce(0, +)
-}
-
+var total = grid.joined().reduce(0, +)
 print(total)
