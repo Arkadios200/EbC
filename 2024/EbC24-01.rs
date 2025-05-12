@@ -18,21 +18,17 @@ fn get_input() -> Vec<String> {
 }
 
 fn calc(s: &str, l: usize) -> usize {
-  let a = s.chars().fold(0, |acc, c| acc + score(c));
+  let scores = HashMap::<char, usize>::from([
+    ('A', 0),
+    ('B', 1),
+    ('C', 3),
+    ('D', 5),
+    ('x', 0)
+  ]);
+  let a = s.chars().fold(0, |acc, c| acc + scores.get(&c).expect("Invalid input"));
   let b = s.chars().collect::<Vec<_>>().chunks(l).fold(0, |acc, chunk| acc + extra(chunk));
 
   a + b
-}
-
-fn score(c: char) -> usize {
-  match c {
-    'A' => 0,
-    'B' => 1,
-    'C' => 3,
-    'D' => 5,
-    'x' => 0,
-    _ => panic!("Invalid input")
-  }
 }
 
 fn extra(s: &[char]) -> usize {
