@@ -2,19 +2,16 @@ use std::fs;
 use std::iter::zip;
 
 fn main() {
-  let input = get_input();
+  let input = vec![
+    fs::read_to_string("input1.txt").unwrap(),
+    fs::read_to_string("input2.txt").unwrap(),
+    fs::read_to_string("input3.txt").unwrap()
+  ];
+
   for (i, s) in zip(1.., input.iter()) {
     let ans = calc(s, i);
     println!("Part {i} answer: {ans}");
   }
-}
-
-fn get_input() -> Vec<String> {
-  vec![
-    fs::read_to_string("input1.txt").unwrap(),
-    fs::read_to_string("input2.txt").unwrap(),
-    fs::read_to_string("input3.txt").unwrap()
-  ]
 }
 
 fn calc(s: &str, l: usize) -> usize {
