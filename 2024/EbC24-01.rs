@@ -25,6 +25,7 @@ fn calc(s: &str, l: usize) -> usize {
     ('D', 5),
     ('x', 0)
   ]);
+
   let a = s.chars().fold(0, |acc, c| acc + scores.get(&c).expect("Invalid input"));
   let b = s.chars().collect::<Vec<_>>().chunks(l).fold(0, |acc, chunk| acc + extra(chunk));
 
