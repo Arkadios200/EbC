@@ -3,7 +3,7 @@ use std::iter::zip;
 
 fn main() {
   let input = get_input();
-  for (i, s) in zip(1..=input.len(), input.iter()) {
+  for (i, s) in zip(1.., input.iter()) {
     let ans = calc(s, i);
     println!("Part {i} answer: {ans}");
   }
