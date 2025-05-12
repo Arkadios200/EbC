@@ -30,6 +30,6 @@ fn calc(s: &str, l: usize) -> usize {
 }
 
 fn extra(s: &[char]) -> usize {
-  let n = s.into_iter().filter(|&&c| c != 'x').collect::<Vec<_>>().len();
+  let n = s.into_iter().filter(|&&c| c != 'x').count();
   n * n - n
 }
