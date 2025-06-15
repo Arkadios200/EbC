@@ -1,3 +1,4 @@
+// Alternatively, one could filter out the directions besides up and down ones
 struct Point: Equatable, Hashable {
   let x: Int
   let y: Int
