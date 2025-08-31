@@ -24,9 +24,9 @@ struct Board {
 }
 
 struct Coin {
-  let dirs: [Character]
+  let dirs: [Int]
 
-  init(dirs: [Character]) {
+  init(dirs: [Int]) {
     self.dirs = dirs
   }
 
@@ -40,8 +40,7 @@ struct Coin {
           switch pos.x {
             case 0: return 1
             case board.width: return -1
-            default: 
-              return dirs[i] == "R" ? 1 : -1
+            default: return dirs[i]
           }
         }()
         i = (i + 1) % dirs.count
@@ -68,7 +67,13 @@ func getInput() -> (Board, [Coin]) {
 
   var coins: [Coin] = []
   while let line = readLine() {
-    coins.append(Coin(dirs: Array(line)))
+    coins.append(Coin(dirs: line.map {
+      switch $0 {
+        case "L": return -1
+        case "R": return 1
+        default: fatalError()
+      }
+    }))
   }
 
   return (Board(board), coins)
