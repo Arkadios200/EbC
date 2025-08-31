@@ -76,12 +76,6 @@ func getInput() -> (Board, [Coin]) {
 
 let (board, coins) = getInput()
 
-var total = 0
-for (n, coin) in zip(1..., coins) {
-  let initial = n
-  let final = coin.simulate(board, slot: n)
-  let score = (final * 2) - initial
+let ans = zip(1..., coins).map { 2 * $0.1.simulate(board, slot: $0.0) - $0.0 }.filter { $0 > 0 }.reduce(0, +)
 
-  if score > 0 { total += score }
-}
-print(total)
+print(ans)
