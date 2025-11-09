@@ -35,27 +35,30 @@ extension Optional where Wrapped: CustomStringConvertible {
 
 struct Sword {
   let id: Int
-  let value: [Int]
+  let quality: Int
+  let levels: [Int]
 
   init(id: Int, nums: [Int]) {
     self.id = id
-    self.value = Sword.calc(nums)
+    (self.quality, self.levels) = Sword.calc(nums)
   }
 
-  private static func calc(_ nums: [Int]) -> [Int] {
+  private static func calc(_ nums: [Int]) -> (Int, [Int]) {
     let fishbone = nums.fishbone
 
     let quality = Int(fishbone.map { String($0.s) }.joined())!
     let levels = fishbone.map { Int("\($0.l.toString() ?? "")\($0.s)\($0.r.toString() ?? "")")! }
 
-    return [quality] + levels
+    return (quality, levels)
   }
 }
 
 extension Sword: Equatable, Comparable {
   static func < (lhs: Sword, rhs: Sword) -> Bool {
-    if lhs.value != rhs.value {
-      return lhs.value < rhs.value
+    if lhs.quality != rhs.quality {
+      return lhs.quality < rhs.quality
+    } else if lhs.levels != rhs.levels {
+      return lhs.levels < rhs.levels
     } else {
       return lhs.id < rhs.id
     }
