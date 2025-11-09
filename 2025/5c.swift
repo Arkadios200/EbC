@@ -38,11 +38,17 @@ struct Sword {
   let value: [Int]
 
   init(id: Int, nums: [Int]) {
-    let fishbone = nums.fishbone
-    let quality = Int(fishbone.map { String($0.s) }.joined())!
-
     self.id = id
-    self.value = [quality] + fishbone.map { Int("\($0.l.toString() ?? "")\($0.s)\($0.r.toString() ?? "")")! }
+    self.value = Sword.calc(nums)
+  }
+
+  private static func calc(_ nums: [Int]) -> [Int] {
+    let fishbone = nums.fishbone
+
+    let quality = Int(fishbone.map { String($0.s) }.joined())!
+    let levels = fishbone.map { Int("\($0.l.toString() ?? "")\($0.s)\($0.r.toString() ?? "")")! }
+
+    return [quality] + levels
   }
 }
 
@@ -71,4 +77,3 @@ let swords = getInput()
 let ans3 = zip(1..., swords.sorted(by: >).map { $0.id }).reduce(0) { $0 + $1.0 * $1.1 }
 
 print(ans3)
-```||
