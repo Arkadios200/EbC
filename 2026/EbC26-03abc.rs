@@ -1,3 +1,5 @@
+use std::ops::Rem;
+
 const SAMPLE1: &str = "\
   ISO-3210 7654\n\
   ISO-8742 2468\n\
@@ -25,7 +27,6 @@ const SAMPLE3: &str = "\
 ";
 
 fn main() {
-
   let ans1: u64 = process_input(SAMPLE1).into_iter()
     .map(|(iso, num)| part1(iso, num))
     .sum();
@@ -36,26 +37,16 @@ fn main() {
     .filter_map(|(iso, num)| part3(iso, num))
     .sum();
   
-  println!("{ans1}");
-  println!("{ans2}");
-  println!("{ans3}");
-}
-
-fn part3(iso: u64, num: u64) -> Option<u64> {
-  let ans = part2(iso, num);
-
-  if (1..num).all(|n| part2(iso, n) != ans) {
-    Some(ans)
-  } else {
-    None
-  }
+  println!("Part 1 answer: {ans1}");
+  println!("Part 2 answer: {ans2}");
+  println!("Part 3 answer: {ans3}");
 }
 
 fn part1(mut iso: u64, mut num: u64) -> u64 {
   let mut ans: u64 = 0;
   let mut p: u32 = 0;
   while num > 0 {
-    ans += (num % 10) * (iso % 10).pow(p);
+    ans += num.rem(10) * iso.rem(10).pow(p);
 
     num /= 10;
     iso /= 10;
@@ -71,7 +62,7 @@ fn part2(iso: u64, mut num: u64) -> u64 {
   let mut iso_loop: u64 = iso;
   let mut p: u32 = 0;
   while num > 0 {
-    ans += (num % 10) * (iso_loop % 10).pow(p);
+    ans += num.rem(10) * iso_loop.rem(10).pow(p);
 
     num /= 10;
     iso_loop /= 10;
@@ -80,6 +71,16 @@ fn part2(iso: u64, mut num: u64) -> u64 {
   }
 
   ans
+}
+
+fn part3(iso: u64, num: u64) -> Option<u64> {
+  let ans = part2(iso, num);
+
+  if (1..num).all(|n| part2(iso, n) != ans) {
+    Some(ans)
+  } else {
+    None
+  }
 }
 
 fn process_input(s: &str) -> Vec<(u64, u64)> {
